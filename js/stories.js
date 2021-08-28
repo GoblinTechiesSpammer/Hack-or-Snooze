@@ -51,12 +51,22 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-function submitStory(){
+async function submitStory(e){
+  e.preventDefault();
+
   let $author = $("#author").val();
   let $title = $("#title").val();
   let $url = $("#url").val();
 
+  //Clear the form
+  $("#author").val("");
+  $("#title").val("");
+  $("#url").val("");
+
   console.log($author);
-  storyList.addStory( currentUser, {title : $title, author : $author, url : $url});
+  await storyList.addStory( currentUser, {title : $title, author : $author, url : $url});
   putStoriesOnPage();
 }
+
+const $submitButton = $("#submission-form button");
+$submitButton.on("click", submitStory);
