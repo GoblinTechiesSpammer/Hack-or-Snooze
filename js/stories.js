@@ -50,3 +50,13 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+function submitStory(){
+  let $author = $("#author").val();
+  let $title = $("#title").val();
+  let $url = $("#url").val();
+
+  console.log($author);
+  storyList.addStory( currentUser, {title : $title, author : $author, url : $url});
+  putStoriesOnPage();
+}

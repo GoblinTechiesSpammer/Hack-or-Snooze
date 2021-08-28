@@ -37,4 +37,8 @@ function updateNavOnLogin() {
 
 function navSubmitClick(evt){
   console.debug("navSubmitClick", evt);
+  $("#submission-form").toggle();
 }
+
+const $navSubmit = $("#nav-submit");
+$navSubmit.on("click", navSubmitClick);
