@@ -122,9 +122,30 @@ function favoriteIconEvent(){
 }
 
 async function favoriteIconClick(){
-  console.log($(this).attr("data-story-id"));
-  // console.log($(this).parent().attr("id"));
-
   const $storyId = $(this).attr("data-story-id");
-  let response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, {token : currentUser.loginToken});
+
+  const alreadyFavorited = currentUser.favorites.map(function(story){
+    return story.storyId;
+  });
+
+  if(alreadyFavorited.indexOf($storyId) === -1){  //If it's not already favorited.
+    let response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, {token : currentUser.loginToken});
+    console.log("Favorited!");
+    currentUser.favorites = response.data.user.favorites.map(function(story){
+      return new Story(story);
+    });
+  }
+  else{
+    let response = await axios({
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`,
+      method: "DELETE",
+      data: { token : currentUser.loginToken },
+    });
+    console.log("Already Favorited.");
+    currentUser.favorites = response.data.user.favorites.map(function(story){
+      return new Story(story);
+    });
+  }
+  console.log(currentUser.favorites);
+
 }
