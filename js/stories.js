@@ -10,6 +10,9 @@ async function getAndShowStoriesOnStart() {
   $storiesLoadingMsg.remove();
 
   putStoriesOnPage();
+
+  //REMOVE AFTER TESTING!!!!!!!!!!!!!!
+  favoriteIconEvent();
 }
 
 /**
@@ -25,6 +28,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <i class="far fa-star" data-story-id = "${story.storyId}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>

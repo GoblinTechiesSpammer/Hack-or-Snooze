@@ -114,3 +114,17 @@ function updateUIOnUserLogin() {
 
   updateNavOnLogin();
 }
+
+//When user clicks star icon add favorite.
+function favoriteIconEvent(){
+  let $favoriteIconList = $(".fa-star");
+  $favoriteIconList.on("click", favoriteIconClick);
+}
+
+async function favoriteIconClick(){
+  console.log($(this).attr("data-story-id"));
+  // console.log($(this).parent().attr("id"));
+
+  const $storyId = $(this).attr("data-story-id");
+  let response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${$storyId}`, {token : currentUser.loginToken});
+}

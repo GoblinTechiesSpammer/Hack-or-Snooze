@@ -35,9 +35,22 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
+//When a user clicks on the "New Story" link, show the submission form.
 function navNewStoryClick(evt){
   console.debug("navNewStoryClick", evt);
-  $("#submission-form").toggle();
+  $submissionForm.toggle();
 }
 
 $navNewStory.on("click", navNewStoryClick);
+
+//When a user clicks on the "Favorites" link, show the favorites list.
+function navFavoritesClick(evt){
+  evt.preventDefault();
+  console.debug("navFavoritesClick", evt);
+  //Hide the main page content.
+  hidePageComponents();
+  //Show the favorites list.
+  $favoriteStories.show();
+}
+
+$navFavorites.on("click", navFavoritesClick);
