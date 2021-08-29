@@ -134,6 +134,9 @@ async function favoriteIconClick(){
     currentUser.favorites = response.data.user.favorites.map(function(story){
       return new Story(story);
     });
+
+    $(this).addClass("fas");
+    $(this).removeClass("far");
   }
   else{
     let response = await axios({
@@ -145,7 +148,24 @@ async function favoriteIconClick(){
     currentUser.favorites = response.data.user.favorites.map(function(story){
       return new Story(story);
     });
+
+    $(this).addClass("far");
+    $(this).removeClass("fas");
   }
   console.log(currentUser.favorites);
+}
 
+function updateStarIcons(){
+  let $stars = $(".fa-star");
+
+  $stars.each(function(){
+    let id = $(this).attr("data-story-id");
+
+    for(let fav of currentUser.favorites){
+      if(id === fav.storyId){
+        $(this).addClass("fas");
+        $(this).removeClass("far");
+      }
+    }
+  });
 }

@@ -13,6 +13,7 @@ async function getAndShowStoriesOnStart() {
 
   //REMOVE AFTER TESTING!!!!!!!!!!!!!!
   favoriteIconEvent();
+  updateStarIcons();
 }
 
 /**
