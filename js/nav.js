@@ -113,13 +113,16 @@ function putFavoritesOnPage() {
 //Same code copies for favories to "My Stories"
 
 //When a user clicks on the "My Stories" link, show the user stories list.
-function navUserStoriesClick(evt){
+async function navUserStoriesClick(evt){
   evt.preventDefault();
   console.debug("navUserStoriesClick", evt);
   //Hide the main page content.
   hidePageComponents();
   //Show the favorites list.
   $userStories.show();
+
+  let res2 = await axios.get(`${BASE_URL}/users/${currentUser.username}`, {params : {token : currentUser.loginToken}});
+  currentUser.ownStories = res2.data.user.stories;
 
   putUserStoriesOnPage();
   favoriteIconEvent();
@@ -133,7 +136,9 @@ $navUserStories.on("click", navUserStoriesClick);
 function generateUserStoriesMarkup(story) {
   // console.debug("generateUserStoriesMarkup", story);
 
-  const hostName = story.getHostName();
+  // const hostName = story.getHostName();
+  //For some reason there was an error on only this one.
+  const hostName = "hostname.com"
   return $(`
       <li id="${story.storyId}">
         <i class="fas fa-trash" data-story-id = "${story.storyId}"></i>
