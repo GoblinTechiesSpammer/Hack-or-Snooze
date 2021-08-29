@@ -169,3 +169,25 @@ function updateStarIcons(){
     }
   });
 }
+
+//Trash can for my stories.
+
+function trashIconEvent(){
+  let $trashIconList = $(".fa-trash");
+  $trashIconList.on("click", trashIconClick);
+}
+
+async function trashIconClick(){
+  const $storyId = $(this).attr("data-story-id");
+  console.log($(this));
+
+  let response = await axios({
+    url: `${BASE_URL}/stories/${$storyId}`,
+    method: "DELETE",
+    data: { token : currentUser.loginToken },
+  });
+
+  let res2 = await axios.get(`${BASE_URL}/users/${currentUser.username}`, {params : {token : currentUser.loginToken}});
+  currentUser.ownStories = res2.data.user.stories;
+  putUserStoriesOnPage();
+}
